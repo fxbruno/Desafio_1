@@ -4,9 +4,10 @@ $username = "root";
 $password = "Batata.2021";
 $dbname = "desafio";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // Configurar o modo de erro do PDO para o modo de exceção
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    die("Falha na conexão: " . $e->getMessage());
 }
